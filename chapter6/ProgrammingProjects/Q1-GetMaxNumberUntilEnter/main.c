@@ -9,13 +9,14 @@ typedef long double type;
 int main()
 {
     type max = LLONG_MIN;
-    type comp2Max;
-    char str[20];
-    char* endPtr;
+    type comp2Max = -1;
+    char str[20] = {'\0'};
+    char* endPtr = NULL;
     bool isZero = false;    
-    int c;
+    int c = -1;
 
-    /* printf("long double size = %zu", sizeof(type)); */
+
+    /* printf("long double size = %zu", sizeof(type)); Debugging */
 
     while(!isZero){
         printf("Enter a number: ");
@@ -29,11 +30,9 @@ int main()
         else
         str[strlen(str)-1]='\0';
 
-        //if(!strcmp(str, "0"))
-        if(str[0] == '\0')
+        if(str[0] == '\0') //Check if str is empty
             isZero = true;
         else{
-
             comp2Max = strtold(str, &endPtr);
 
             if(strcmp(endPtr, "")){
@@ -45,12 +44,14 @@ int main()
                continue;}
 
             if(max < comp2Max)
-                max = comp2Max;
-            
+                max = comp2Max;  
         }
     } 
 
-    printf("\nThe largest number entered was %Lg\n", max);
+    if(max == LLONG_MIN) { 
+	    printf("\nError: There was no valid input to determine the largest number."); } 
+    else{ 
+	    printf("\nThe largest number entered was %Lg\n", max); }
 
     return 0;
 }
