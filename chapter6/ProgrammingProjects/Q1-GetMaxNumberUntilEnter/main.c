@@ -7,6 +7,17 @@
 
 typedef long double type;
 
+void print_error(int errorNo){
+    switch(errorNo){
+      case 0:
+         puts("Ignored because input is not a number");
+         break;
+      case 1:
+         puts("Ignored because value is too large.");
+         break;
+    }
+}
+
 int main()
 {
     type max = LLONG_MIN;
@@ -18,7 +29,10 @@ int main()
     bool isZero = false;    
     int c = -1;
 
-    /* printf("long double size = %zu", sizeof(type)); Debugging */
+
+    puts("Type a number until typing enter to get a max number!");
+    puts("Author: Garenium");
+    puts("Date: Nov 5, 2021\n");
 
     while(!isZero){
         printf("Enter a number: ");
@@ -35,7 +49,7 @@ int main()
             if(*tempBuff == (int)(*tempBuff)){ //Checking if the numbers are equal without trailing zeros
 
                 //assign the characters until the character period is found
-                for(size_t i = 0; i < sizeof(tempBuff)/sizeof(type); ++i){
+                for(size_t i = 0; i < strlen(tempBuff); ++i){
 
                     if(tempBuff[i] == '.') { break; }
                     else{ outputBuff[i] = tempBuff[i]; }
@@ -55,21 +69,30 @@ int main()
         else
         inputBuff[strlen(inputBuff)-1]='\0';
 
-        if(inputBuff[0] == '\0') //Check if tempBuff is empty
+        if(inputBuff[0] == '\0') //Check if inputBuff is empty
             isZero = true; //exit the loop
         else{
-            comp2Max = strtold(inputBuff, &endPtr); //Convert the string to a long double
+            if(strlen(inputBuff) > 1 && inputBuff[0] == 0) {
+                //Not allowing inputs like 0343, 02, etc.
+                print_error(0); 
+                continue;
+            }else{
+                comp2Max = strtold(inputBuff, &endPtr); //Convert the string to a long double
 
-            if(strcmp(endPtr, "")){ //If a non-digit character is found
-                puts("Ignored because input is not a number");
-                continue;}
+                if(strcmp(endPtr, "")){ //If a non-digit character is found
+                    print_error(0);                    
+                    continue;
+                }
 
-            if(strlen(inputBuff) >= 10){ //Checking for length
-               puts("Ignored because value is too large.");
-               continue;}
+                if(strlen(inputBuff) >= 10){ //Checking for length
+                    print_error(1);
+                    continue;
+                }
 
-            if(max < comp2Max)
-                max = comp2Max;
+                if(max < comp2Max)
+                    max = comp2Max;
+            }
+
         }
     } 
 
