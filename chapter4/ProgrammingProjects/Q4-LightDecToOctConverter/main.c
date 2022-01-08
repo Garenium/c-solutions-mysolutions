@@ -5,9 +5,9 @@
 
 int main(int argc, char* argv[])
 {
-    /*puts("Light dec to octal converter");
+    puts("Light dec to octal converter");
     puts("Author: Garenium");
-    puts("Date: Jun 5, 2021\n");*/
+    puts("Date: Jun 5, 2021\n");
 
     char str[10];
     char* endPtr;
