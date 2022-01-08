@@ -20,16 +20,18 @@ bool isInputNumbers(char* str)
         if(str[i] == '-') {
             i++;
             negException++;
-            if(negException > 1)
+            if(negException > 1){
+                condition = true;
                 break;
-            
+            }
         }
         else if(str[i] == ' '){
             i++;
             spaceException++;
-            if(spaceException > 1)
+            if(spaceException > 1){
+                condition = true;
                 break;
-
+            }
         }
         else if(!isdigit(str[i])){
             condition = true;
@@ -51,7 +53,7 @@ int main(int argc, int* argv[])
     //Max no. of digits in MAX_IN is 10, since there are two integers involved and negative numbers are valid, a bump up to 27 is appropriate.
     char input[MAX_BUFFER];   
     char str[MAX_BUFFER];
-    int twoInts[2]; 
+    long int twoInts[2]; 
     int count = 0;
     char *firstToken;
     char *secondToken;
@@ -96,24 +98,25 @@ int main(int argc, int* argv[])
         return -1; 
     }
     else{
+        
         if(firstToken[0] == '0' || secondToken[0] == '0')
         {
-            puts("Error: Only base 10 numbers are allowed");
+            puts("Error: Values cannot be 0 and only base 10 numbers are allowed");
             return -1;
         }
 
-        twoInts[0] = atoi(firstToken);
-        twoInts[1] = atoi(secondToken);
+        twoInts[0] = atol(firstToken);
+        twoInts[1] = atol(secondToken);
     }
 
     while(twoInts[1] != 0)    
     {
-        int r = twoInts[0] % twoInts[1];
+        long int r = twoInts[0] % twoInts[1];
         twoInts[0] = twoInts[1];
         twoInts[1] = r;
     }
 
-    printf("Greatest common divisor: %d\n", twoInts[0]);
+    printf("Greatest common divisor: %ld\n", twoInts[0]);
 
     return 0;
 }

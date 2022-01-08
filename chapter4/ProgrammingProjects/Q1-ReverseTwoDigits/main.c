@@ -21,6 +21,7 @@ int main(void)
 
         if(n[strlen(n)-1] == '\n')
         {
+            //printf("%zu", strlen(n)); Debugging purposes
             n[strlen(n) - 1] = '\0';
             ungetc('\n', stdin);
         }       
@@ -41,6 +42,7 @@ int main(void)
         }
         else 
         {
+            //printf("%zu", strlen(n)); Debugging purposes
             puts("Error: please type only two digits");
             while ((c = getchar()) != EOF &&   c!= '\n') {};
         }
