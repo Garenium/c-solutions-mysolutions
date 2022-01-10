@@ -98,23 +98,23 @@ int main(int argc, char* argv[])
         iterator = 0; //I forgot what this was meant for.
     }
 
-    /* printf("%d  /  %d\n", fraction[0], fraction[1]); //debugging purposes*/
+    printf("%d/%d --> ", fraction[0], fraction[1]);
 
     type numerator = fraction[0];
     type denominator = fraction[1];
     
-    while(denominator != 0){
-        type r = numerator % denominator; 
-        numerator = denominator; 
-        denominator = r;
-
-    }
-
-    printf("%d/%d --> ", fraction[0], fraction[1]);
     if(numerator == denominator)
        puts("1");
-    else
-     printf("%d/%d\n", fraction[0]/numerator, fraction[1]/numerator);
+    else{
+        while(denominator != 0){
+            type r = numerator % denominator; 
+            numerator = denominator; 
+            denominator = r;
+
+        }
+
+         printf("%d/%d\n", fraction[0]/numerator, fraction[1]/numerator);
+    }
 
     free(copy_str);
     exit(EXIT_SUCCESS);
