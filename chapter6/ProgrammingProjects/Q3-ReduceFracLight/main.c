@@ -28,7 +28,9 @@ enum Errors{
 *   https://youtu.be/QyDE7cPycnU?t=144
 */
 bool strtonum(char* str, int* result);
+
 void raise_error(enum Errors error);
+
 int main(int argc, char* argv[])
 {
     char str[MAX_LENGTH*3+2]; //32 bytes
@@ -37,6 +39,8 @@ int main(int argc, char* argv[])
     int iterator = 0;
 
     puts("Reduce fraction to its lowest term program");
+    puts("Garenium");
+    puts("Jan 10, 2022");
     printf("Type a fraction (number/number): ");
     copy_str = strdup(fgets(str, 30, stdin));
     char* token = NULL; 
