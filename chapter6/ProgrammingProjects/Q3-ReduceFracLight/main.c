@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 {
     char str[MAX_LENGTH*3+2]; //32 bytes
     char* copy_str = NULL;
-    type fraction[2];
+    type fraction[2] = {};
     int iterator = 0;
 
     puts("Reduce fraction to its lowest term program");
@@ -102,7 +102,6 @@ int main(int argc, char* argv[])
         iterator = 0; //I forgot what this was meant for.
     }
 
-    printf("%d/%d --> ", fraction[0], fraction[1]);
 
     type numerator = fraction[0];
     type denominator = fraction[1];
@@ -117,7 +116,15 @@ int main(int argc, char* argv[])
 
         }
 
-         printf("%d/%d\n", fraction[0]/numerator, fraction[1]/numerator);
+        //GCD is numerator now
+        if(numerator < 0){
+           fraction[0] *= -1; 
+           fraction[1] *= -1;
+        }
+
+
+        printf("GCD: %ld\n", (long int)numerator);
+        printf("%ld/%ld\n", (long int)fraction[0]/numerator, (long int)fraction[1]/numerator);
     }
 
     free(copy_str);
