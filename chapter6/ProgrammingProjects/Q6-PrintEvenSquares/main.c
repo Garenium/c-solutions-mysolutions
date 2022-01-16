@@ -20,30 +20,42 @@ int main(int argc, char* argv[]){
     
     char str[50] = {};
     char* endPtr;
-    puts("The following program prints all even squares");
-    
+    puts("Even Square Calculator");
+    puts("Garenium");
+    puts("Jan 15, 2021");
+
+
     fgets(str, 42, stdin);
 
-    /* printf("%zu\n", strlen(str)); */
+    /* printf("%zu\n", strlen(str)); Checking length for debugging purposes*/
+    //Check if length is more than 30 digits (and \n included)
     if(strlen(str) > 31){
         puts("Error: input is too long");
         return -1;
     }
 
+    //Check if input is numeric
     if(!(is_number(str)) || str[0] == '\n'){
         puts("Error: input is invalid");
         return -1;
     }
 
-    puts("\nEven Squares:");
+    //Convert c-string to numeric type and 
+    //prepare for output
     long int number = strtol(str,&endPtr,10);
-    long int even_square = 2;
+    long int even_square = 4;
     long int x = 0;
 
-    while(even_square < number){  
+    //Ouput
+    puts("\nEven Squares:");
+    for(;;) {  
         x = x + 2;
         even_square = pow(x,2);
+    if(even_square > number)
+        break;
+    else
         printf("%ld\n", even_square);
+
     }
 
 
