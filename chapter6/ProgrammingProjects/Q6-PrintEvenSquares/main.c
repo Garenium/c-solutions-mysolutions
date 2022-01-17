@@ -65,7 +65,5 @@ int main(int argc, char* argv[]){
         printf("\n%ld", even_square);
     }
        
-    puts("");
-
     return 0;
 }
