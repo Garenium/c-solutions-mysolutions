@@ -2,12 +2,10 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
-#include <limits.h>
-#include <math.h>
 
-typedef double type;
+typedef long double type;
 
-void print_error(int errorNo){
+void raiseError(int errorNo){
     switch(errorNo){
       case 0:
          puts("Ignored because input is not a number");
@@ -18,72 +16,87 @@ void print_error(int errorNo){
     }
 }
 
+
 int main()
 {
-    type max = LLONG_MIN;
+    type max = -1;
     type comp2Max = -1;
-    char inputBuff[20] = {'\0'};
-    char fracBuff[50] = {'\0'};
-    char intBuff[50] = {'\0'};
-    char outputBuff[50] = {'\0'};
+    char str[20];
     char* endPtr = NULL;
     bool isZero = false;    
-    int c = -1;
-
+    int c = 0;
+    bool firstInput = true;
+    enum errorMsgs;
 
     puts("Type a number until typing enter to get a max number!");
     puts("Author: Garenium");
-    puts("Date: Nov 5, 2021\n");
+    puts("Date: Feb 28, 2022\n");
+
+
+    /* printf("long double size = %zu", sizeof(type)); */
 
     while(!isZero){
         printf("Enter a number: ");
-        fgets(inputBuff, 15, stdin);
+        fgets(str, 15, stdin);
         
-        //If the str input is \n
-        //Assign the last inputted max value to tempBuff
-        if(inputBuff[0] == '\n'){ //Last input
-                        //We want to output outputBuff identically to input (unfinished)
-            if(max == LLONG_MIN) { //If max was never reassigned
-              printf("\nError: There was no valid input to determine the largest number.\n"); }
-            else{
-
-              printf("\nThe largest number entered was %.4lf\n", max); 
-
-            }
-        }
-
-        if(strlen(inputBuff) > 1 && inputBuff[0] == '0') { //Not allowing inputs like 0343, 02, etc.
-             print_error(0);
-        }
-        else if(strlen(inputBuff) >= 10){ //Checking for length
-             print_error(1);
-        }
+        //If the input is too long 
+        //and the \n is overwritten
+        //Flush the buffer
+        if(str[strlen(str)-1] != '\n')
+            while((c = getchar()) != '\n' && c != EOF); //flushing
         else{
-            //If the input is too long 
-            //and the \n is overwritten
-            //Flush the buffer to allow the user retype 
-            //a number again
-            if(inputBuff[strlen(inputBuff)-1] != '\n')
-                while((c = getchar()) != '\n' && c != EOF);
-            else
-            inputBuff[strlen(inputBuff)-1]='\0';
 
-            if(inputBuff[0] == '\0') //Check if inputBuff is empty
-                isZero = true; //exit the loop
-            else{
-                    comp2Max = strtold(inputBuff, &endPtr); //Convert the string to a long double
+            if(str[0] == '0' && strlen(str) > 2)
+            {
+              raiseError(0);
+              continue;
+            }
 
-                    if(strcmp(endPtr, "")){ //If a non-digit character is found
-                        print_error(0);                    
-                        continue;
-                    }
+            str[strlen(str)-1]='\0';
 
-                    if(max < comp2Max)
-                        max = comp2Max;
+            //control if input is "\0"
+            if(str[0] == '\0'){
+                //Ignore first input if it's \0
+                if(firstInput){  //if true
+                    raiseError(0);
+                    continue;
+                }
+                else{
+                    isZero = true;
+                    break;
+                }
             }
         }
+        
+
+        comp2Max = strtold(str, &endPtr);
+        /* printf("comp2Max: %Lf\n",comp2Max); //debugging */ 
+        /* printf("endPtr: %s\n", endPtr); //debugging */
+
+        if(strcmp(endPtr, "")){
+            raiseError(0);
+            continue;}
+
+        if(strlen(str) >= 10){
+            raiseError(1);
+           continue;}
+
+        if(max < comp2Max)
+            max = comp2Max;
+        /* printf("Max: %Lf \n", max); */
+        firstInput = false;
+     
     } 
 
+    if(max - (int)max == 0.0){ //Is it an integer?
+        /* puts("subtracting"); */
+        long long int mx = max;
+        printf("\nThe largest number entered was %lld\n", mx);
+    }
+    else{ //or not?
+        printf("\nThe largest number entered was %Lf\n", max);
+    }
 
     return 0;
 }
+

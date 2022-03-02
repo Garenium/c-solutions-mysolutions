@@ -52,18 +52,19 @@ int main(int argc, char* argv[]){
     //Ouput
     printf("\nEven Squares: ");
     for(;;) {  
-        x = x + 2;
-        even_square = pow(x,2);
-    if(even_square > number){
+      x = x + 2;
+      even_square = pow(x,2);
+        if(even_square > number){
 
-        if(x == 2)
-            printf("No even squares\n");
+            if(x == 2)
+                printf("No even squares\n");
 
-        break;
-    }
-    else
-        printf("\n%ld", even_square);
+            break;
+        }
+        else
+            printf("\n%ld", even_square);
     }
        
+    puts("");
     return 0;
 }

@@ -1,0 +1,84 @@
+daysInMonth: 28
+startingDay: 1
+
+daysInMonth: 28
+startingDay: 2
+
+daysInMonth: 28
+startingDay: 3
+
+daysInMonth: 28
+startingDay: 4
+
+daysInMonth: 28
+startingDay: 5
+
+daysInMonth: 28
+startingDay: 6
+
+daysInMonth: 28
+startingDay: 7
+
+daysInMonth: 29
+startingDay: 1
+
+daysInMonth: 29
+startingDay: 2
+
+daysInMonth: 29
+startingDay: 3
+
+daysInMonth: 29
+startingDay: 4
+
+daysInMonth: 29
+startingDay: 5
+
+daysInMonth: 29
+startingDay: 6
+
+daysInMonth: 29
+startingDay: 7
+
+daysInMonth: 30
+startingDay: 1
+
+daysInMonth: 30
+startingDay: 2
+
+daysInMonth: 30
+startingDay: 3
+
+daysInMonth: 30
+startingDay: 4
+
+daysInMonth: 30
+startingDay: 5
+
+daysInMonth: 30
+startingDay: 6
+
+daysInMonth: 30
+startingDay: 7
+
+daysInMonth: 31
+startingDay: 1
+
+daysInMonth: 31
+startingDay: 2
+
+daysInMonth: 31
+startingDay: 3
+
+daysInMonth: 31
+startingDay: 4
+
+daysInMonth: 31
+startingDay: 5
+
+daysInMonth: 31
+startingDay: 6
+
+daysInMonth: 31
+startingDay: 7
+
