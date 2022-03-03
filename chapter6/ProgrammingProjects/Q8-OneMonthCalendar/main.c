@@ -49,6 +49,25 @@ int main(int argc, char* argv[]){
             return -1;
         }
     }
+    else{
+        puts("Error: Invalid arguments");
+        return -1;
+    }
+    
+    /*Print any leading whitespace characters*/
+    printf("\n");
+
+    int i;
+    for(i = 1; i < startingDay; ++i )
+       printf("   ");
+
+    for(i = 1; i <= daysInMonth; ++i){
+        printf("%3d", i);
+        if((startingDay + i - 1) % 7 == 0)
+            printf("\n");
+    }
+    
+    printf("\n");
     
     return 0;
 }
