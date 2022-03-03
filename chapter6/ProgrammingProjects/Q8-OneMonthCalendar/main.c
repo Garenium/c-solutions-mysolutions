@@ -55,7 +55,7 @@ int main(int argc, char* argv[]){
     }
     
     /*Print any leading whitespace characters*/
-    printf("\n");
+    puts("\n");
 
     int i;
     for(i = 1; i < startingDay; ++i )
@@ -67,7 +67,7 @@ int main(int argc, char* argv[]){
             printf("\n");
     }
     
-    printf("\n");
+    puts("\n");
     
     return 0;
 }
