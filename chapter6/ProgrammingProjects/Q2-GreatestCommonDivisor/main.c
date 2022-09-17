@@ -1,3 +1,4 @@
+//Calculations tested with https://www.calculatorsoup.com/calculators/math/gcf.php
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
@@ -48,44 +49,70 @@ void printTokensToDebug(char* firstToken, char* secondToken){
     printf("second Token: %s\n", secondToken);
 }
 
-int main(int argc, int* argv[])
+int main(int argc, char* argv[])
 {
     //Max no. of digits in MAX_IN is 10, since there are two integers involved and negative numbers are valid, a bump up to 27 is appropriate.
     char input[MAX_BUFFER];   
     char str[MAX_BUFFER];
-    long int twoInts[2]; 
+    long long twoInts[2]; 
     int count = 0;
     char *firstToken;
     char *secondToken;
     char *endPtr; 
+    bool argCmd = false;
 
-    printf("Enter two integers: ");
-    fgets(input, 26, stdin); 
+    printf("%d arguments(s)\n", argc);
+
+    if(argc == 1){
+
+        /* printf("%lld", LLONG_MAX); */
+        printf("Enter two integers: ");
+        fgets(input, 26, stdin); 
 
 
-    input[strlen(input)-1]='\0';
+        input[strlen(input)-1]='\0';
 
-    //Validate the input length
-    if(strlen(input) > MAX_BUFFER-4 || isspace(input[0]))
-    {
-        puts("Error: Input is invalid or out of range.");
-        return -1;
+        //Validate the input length
+        if(strlen(input) > MAX_BUFFER-4 || isspace(input[0]))
+        {
+            puts("Error: Input is invalid or out of range.");
+            return -1;
+        }
+
+        strcpy(str, input);
+        
+        //Check if a second token exists
+        secondToken = strchr(input,' ');
+
+        if(secondToken){
+            secondToken++;
+            //Always remember strtok changes the original string.
+            //Now, input and firstToken are the same.
+            firstToken = strtok(input, " "); 
+        }
+        else
+        {
+            puts("Error: There are no two numbers.");
+            return -1;
+        }
     }
+    else if(argc == 3){
 
-    strcpy(str, input);
-    
-    //Check if a second token exists
-    secondToken = strchr(input,' ');
+        argCmd = true;
+        firstToken = argv[1];
+        secondToken = argv[2];
 
-    if(secondToken){
-        secondToken++;
-        //Always remember strtok changes the original string.
-        //Now, input and firstToken are the same.
-        firstToken = strtok(input, " "); 
+        if(isInputNumbers(firstToken) && isInputNumbers(secondToken)){
+            puts("Error: Either first token or second token is not a number");
+            return -1;
+        }
+
+        //See inside tokens if argv is used 
+        /* printf("first token\n%s\n", firstToken); */
+        /* printf("second token\n%s\n", secondToken); */
     }
-    else
-    {
-        puts("Error: There are no two numbers.");
+    else{
+        printf("Argument command(s) are invalid");
         return -1;
     }
 
@@ -93,7 +120,7 @@ int main(int argc, int* argv[])
     printTokensToDebug(firstToken, secondToken);
 
     //Convert the tokens
-    if(isInputNumbers(str)){
+    if(isInputNumbers(str) && argCmd == false){
         puts("Input is invalid. It has a non-digit character.");
         return -1; 
     }
@@ -111,12 +138,12 @@ int main(int argc, int* argv[])
 
     while(twoInts[1] != 0)    
     {
-        long int r = twoInts[0] % twoInts[1];
+        long long r = twoInts[0] % twoInts[1];
         twoInts[0] = twoInts[1];
         twoInts[1] = r;
     }
 
-    printf("Greatest common divisor: %ld\n", twoInts[0]);
+    printf("Greatest common divisor: %lld\n", twoInts[0]);
 
     return 0;
 }
