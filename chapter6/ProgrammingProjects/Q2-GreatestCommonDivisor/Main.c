@@ -5,13 +5,21 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <unistd.h>
+#include "Header.h"
 
 //Max characters in INT_MIN is 11
 //11 * 2 + 1 (space between two nums) = 23
 //And another four for extra space 24+4=27
+//
+//Calculator soup's max value is 1 x 10^13 (10,000,000,000,000)
+//That will be 14 characters (without commas of course)
+//14 _ 14
+//14 + 1 + 14 = 29 chars
+//So 27 chars is more than enough
 #define MAX_BUFFER 27
 
-bool isInputNumbers(char* str)
+bool isNotNumber(char* str)
 {
     bool condition = false;
     int negException = 0;
@@ -41,14 +49,12 @@ bool isInputNumbers(char* str)
     }
 
     return condition;
-    
 }
 
 void printTokensToDebug(char* firstToken, char* secondToken){
     printf("first Token: %s\n", firstToken);
     printf("second Token: %s\n", secondToken);
 }
-
 int main(int argc, char* argv[])
 {
     //Max no. of digits in MAX_IN is 10, since there are two integers involved and negative numbers are valid, a bump up to 27 is appropriate.
@@ -61,20 +67,18 @@ int main(int argc, char* argv[])
     char *endPtr; 
     bool argCmd = false;
 
-    printf("%d arguments(s)\n", argc);
+    printf("%d argument(s)\n", argc);
 
+    //INPUT
+    //Without args 
     if(argc == 1){
-
-        /* printf("%lld", LLONG_MAX); */
         printf("Enter two integers: ");
         fgets(input, 26, stdin); 
-
 
         input[strlen(input)-1]='\0';
 
         //Validate the input length
-        if(strlen(input) > MAX_BUFFER-4 || isspace(input[0]))
-        {
+        if(strlen(input) > MAX_BUFFER-4 || isspace(input[0])){
             puts("Error: Input is invalid or out of range.");
             return -1;
         }
@@ -85,57 +89,64 @@ int main(int argc, char* argv[])
         secondToken = strchr(input,' ');
 
         if(secondToken){
-            secondToken++;
+            //The first character has a space
+            //We move the pointer to the next non-whitespace character
+            secondToken++; 
             //Always remember strtok changes the original string.
             //Now, input and firstToken are the same.
             firstToken = strtok(input, " "); 
         }
-        else
-        {
+        else{
+            //There is no second token
             puts("Error: There are no two numbers.");
             return -1;
         }
-    }
-    else if(argc == 3){
 
+        //Debugging purposes
+        printTokensToDebug(firstToken, secondToken);
+    }
+    else if(argc == 3) //With args
+    {
         argCmd = true;
         firstToken = argv[1];
         secondToken = argv[2];
 
-        if(isInputNumbers(firstToken) && isInputNumbers(secondToken)){
-            puts("Error: Either first token or second token is not a number");
-            return -1;
-        }
-
         //See inside tokens if argv is used 
-        /* printf("first token\n%s\n", firstToken); */
-        /* printf("second token\n%s\n", secondToken); */
+        printTokensToDebug(firstToken, secondToken);
+        /* printf("\nfirst token:\n%s\n", firstToken); */
+        /* printf("\nsecond token:\n%s\n\n", secondToken); */
     }
-    else{
-        printf("Argument command(s) are invalid");
-        return -1;
-    }
-
-    //Debugging purposes
-    printTokensToDebug(firstToken, secondToken);
-
-    //Convert the tokens
-    if(isInputNumbers(str) && argCmd == false){
-        puts("Input is invalid. It has a non-digit character.");
+    else if(argc == 2)
+    { //"Makes a GCF table"
+        //Call the debug function from the debugger file.
+        puts("GCF table not available");
+        /* gcf_table(argc, argv); */
         return -1; 
     }
-    else{
-        
-        if(firstToken[0] == '0' || secondToken[0] == '0')
-        {
-            puts("Error: Values cannot be 0 and only base 10 numbers are allowed");
-            return -1;
-        }
+    else
+    {
+       puts("Error: Invalid argument(s)");
+       return -1;
 
-        twoInts[0] = atol(firstToken);
-        twoInts[1] = atol(secondToken);
     }
 
+    //VALIDATION
+    if(isNotNumber(firstToken) || isNotNumber(secondToken)){
+            puts("Error: Either first token or second token is not a number");
+            return -1;
+    }
+    else{
+        if(!((firstToken[0] == '0' && strlen(firstToken) == 1) && (secondToken[0] == '0' && strlen(secondToken) == 1)))
+        {
+            //change atol to stol
+            char* ptr;
+            twoInts[0] = strtoll(firstToken, &ptr, 10);
+            twoInts[1] = strtoll(secondToken, &ptr, 10);
+
+        }
+    }
+
+    //Turn this into a function
     while(twoInts[1] != 0)    
     {
         long long r = twoInts[0] % twoInts[1];

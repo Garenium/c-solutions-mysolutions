@@ -1,8 +1,0 @@
-3 arguments(s)
-first Token: -10
-second Token: -10
-Greatest common divisor: -10
-3 arguments(s)
-first Token: -10
-second Token: -10
-Greatest common divisor: -10

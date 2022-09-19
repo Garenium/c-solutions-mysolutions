@@ -1,0 +1,8 @@
+MAX_BUFFER	main.c	13
+Mmain	main.c	/^int main(int argc, char* argv[])$/
+TEST_INT	main.c	136
+TEST_LLONG	main.c	136
+TEST_LONG	main.c	136
+TEST_SHORT	main.c	136
+isInputNumbers	main.c	/^bool isInputNumbers(char* str)$/
+printTokensToDebug	main.c	/^void printTokensToDebug(char* firstToken, char* se/
