@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
-#include "Header.h"
+#include "GCFHead.h"
 
 //Max characters in INT_MIN is 11
 //11 * 2 + 1 (space between two nums) = 23
@@ -19,7 +19,7 @@
 //So 27 chars is more than enough
 #define MAX_BUFFER 27
 
-bool isNotNumber(char* str)
+bool is_not_number(char* str)
 {
     bool condition = false;
     int negException = 0;
@@ -49,12 +49,8 @@ bool isNotNumber(char* str)
     }
 
     return condition;
-}
+}//end is_not_number()
 
-void printTokensToDebug(char* firstToken, char* secondToken){
-    printf("first Token: %s\n", firstToken);
-    printf("second Token: %s\n", secondToken);
-}
 int main(int argc, char* argv[])
 {
     //Max no. of digits in MAX_IN is 10, since there are two integers involved and negative numbers are valid, a bump up to 27 is appropriate.
@@ -67,7 +63,12 @@ int main(int argc, char* argv[])
     char *endPtr; 
     bool argCmd = false;
 
-    printf("%d argument(s)\n", argc);
+    //Debugging purposes
+    /* printf("%d argument(s)\n", argc); */
+    /* printf("\nargc: %d\nargv[1]: %s\n", argc, argv[1]);      //may segfault */
+    /* printf("argv[1][0]: %d (%c)\n", argv[1][0], argv[1][0]); //may segfault */
+    /* printf("sizeof(argv[1]): %zu\n", sizeof(argv[1]));       //may segfault */
+    /* printf("ASCII (-): %d (%c)\n\n", '-', '-'); */
 
     //INPUT
     //Without args 
@@ -103,7 +104,7 @@ int main(int argc, char* argv[])
         }
 
         //Debugging purposes
-        printTokensToDebug(firstToken, secondToken);
+        print_tokens(firstToken, secondToken);
     }
     else if(argc == 3) //With args
     {
@@ -112,33 +113,31 @@ int main(int argc, char* argv[])
         secondToken = argv[2];
 
         //See inside tokens if argv is used 
-        printTokensToDebug(firstToken, secondToken);
+        print_tokens(firstToken, secondToken);
         /* printf("\nfirst token:\n%s\n", firstToken); */
         /* printf("\nsecond token:\n%s\n\n", secondToken); */
     }
-    else if(argc == 2)
+    else if(argc == 2 && argv[1][0] == '-' && strlen(argv[1]) == 2)
     { //"Makes a GCF table"
         //Call the debug function from the debugger file.
-        puts("GCF table not available");
-        /* gcf_table(argc, argv); */
-        return -1; 
+        return gcf_table(argc, argv);
     }
     else
     {
        puts("Error: Invalid argument(s)");
        return -1;
-
     }
 
+
     //VALIDATION
-    if(isNotNumber(firstToken) || isNotNumber(secondToken)){
+    if(is_not_number(firstToken) || is_not_number(secondToken)){
             puts("Error: Either first token or second token is not a number");
             return -1;
     }
     else{
-        if(!((firstToken[0] == '0' && strlen(firstToken) == 1) && (secondToken[0] == '0' && strlen(secondToken) == 1)))
+        if(!((firstToken[0] == '0' && strlen(firstToken) == 1) && 
+                    (secondToken[0] == '0' && strlen(secondToken) == 1)))
         {
-            //change atol to stol
             char* ptr;
             twoInts[0] = strtoll(firstToken, &ptr, 10);
             twoInts[1] = strtoll(secondToken, &ptr, 10);
@@ -146,15 +145,20 @@ int main(int argc, char* argv[])
         }
     }
 
-    //Turn this into a function
-    while(twoInts[1] != 0)    
-    {
-        long long r = twoInts[0] % twoInts[1];
-        twoInts[0] = twoInts[1];
-        twoInts[1] = r;
-    }
+    long long GCF = calculate_gcf(twoInts[0], twoInts[1]);
 
-    printf("Greatest common divisor: %lld\n", twoInts[0]);
+    printf("Greatest common divisor: %lld\n", GCF);
 
     return 0;
-}
+
+}//end main()
+ 
+//Turn this into a function
+/* while(twoInts[1] != 0) */    
+/* { */
+/*     long long r = twoInts[0] % twoInts[1]; */
+/*     twoInts[0] = twoInts[1]; */
+/*     twoInts[1] = r; */
+/* } */
+
+
