@@ -1,0 +1,41 @@
+/* bool is_not_number(char* str) */
+/* { */
+/*     bool condition = false; */
+/*     int negException = 0; */
+/*     int spaceException = 0; */
+/*     int zeroException = 0; */
+/*     for(size_t i = 0; i < strlen(str); ++i){ */
+
+/*         if(str[i] == '-') { */
+/*             i++; */
+/*             negException++; */
+/*             if(negException > 1){ */
+/*                 condition = true; */
+/*                 break; */
+/*             } */
+/*         } */
+/*         else if(str[i] == ' '){ */
+/*             i++; */
+/*             spaceException++; */
+/*             if(spaceException > 1){ */
+/*                 condition = true; */
+/*                 break; */
+/*             } */
+/*         } */
+/*         else if(!isdigit(str[i])){ */
+/*             condition = true; */
+/*             break; */
+/*         } */
+/*     } */
+/*     return condition; */
+/* }//end is_not_number() */
+
+//Turn this into a function
+/* while(twoInts[1] != 0) */    
+/* { */
+/*     long long r = twoInts[0] % twoInts[1]; */
+/*     twoInts[0] = twoInts[1]; */
+/*     twoInts[1] = r; */
+/* } */
+
+

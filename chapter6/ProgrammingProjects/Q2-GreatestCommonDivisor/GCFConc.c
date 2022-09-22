@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "GCFHead.h"
-
+#include <limits.h>
 int gcf_table(int argc, char* argv[]){
    /*
      *
@@ -55,17 +55,24 @@ int gcf_table(int argc, char* argv[]){
          case 'L': mode = TEST_LLONG; break;
          default:
          {
-                fprintf(stderr, "Usage: %s [-h] [-d] [-l] [-L]\n", argv[0]);
-                puts("-h is a signed short integer");
-                puts("-d is a signed integer");
-                puts("-l is a long integern");
-                puts("-L is a long long integer");
+          fprintf(stderr, "Available flags (Without any numbers): %s [-h|-d|-l|-L]\n", argv[0]);
+                puts("-h is an unsigned short integer");
+                puts("-d is an unsigned integer");
+                puts("-l is an unsigned long integer");
+                puts("-L is an unsigned long long integer");
                 return -1;
          }
      }
 
     if(mode == TEST_SHORT){
         printf("It's signed integer\n");
+        unsigned short i;
+        unsigned short j;
+
+        for(i = 0, j = 0; i < USHRT_MAX, j < USHRT_MAX; i++, j++){
+                printf("%hu mod %hu = %lld\n", i,j, calculate_gcf(i, j));
+        }
+        
         
     }
     else if(mode == TEST_INT){

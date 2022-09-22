@@ -9,9 +9,9 @@ TARGET_FILE="logs/log.txt"
 
 > "${TARGET_FILE}" 
 
-for i in {-10..10}
+for i in {1..10}
 do
-    for j in {-10..10}
+    for j in {1..10}
     do
         IANDJ="\n$GREEN$i $j$NC\n"
 
@@ -20,7 +20,9 @@ do
 
         #spaceing
         >>"${TARGET_FILE}" 
-        ./a.out $i $j >>"${TARGET_FILE}" #print binary output
+        # ./a.out $i $j >>"${TARGET_FILE}" #print binary output
+          GCD=./a.out $i $j | tail -n 1 "${TARGET_FILE}" | awk '{print $NF}' #print binary output
+          GCD==$(($i % $j)) && echo "valid"
         >>"${TARGET_FILE}" 
 
 

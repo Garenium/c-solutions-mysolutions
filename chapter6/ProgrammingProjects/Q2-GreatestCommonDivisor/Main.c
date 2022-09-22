@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include "GCFHead.h"
 
+//The magic number is 27
 //Max characters in INT_MIN is 11
 //11 * 2 + 1 (space between two nums) = 23
 //And another four for extra space 24+4=27
@@ -19,6 +20,7 @@
 //So 27 chars is more than enough
 #define MAX_BUFFER 27
 
+//Works for strings (tokens) parsed with the a white-space delimiter
 bool is_not_number(char* str)
 {
     bool condition = false;
@@ -26,15 +28,22 @@ bool is_not_number(char* str)
     int spaceException = 0;
     for(size_t i = 0; i < strlen(str); ++i){
 
-        if(str[i] == '-') {
-            i++;
-            negException++;
-            if(negException > 1){
+        if(str[i] == '0' && i == 0){
+             condition = true;
+             break;
+        }
+        else if(str[i] == '-') {
+            /* i++; */
+            /* negException++; */
+            /* if(negException > 1){ */
+            /*     condition = true; */
+            /*     break; */
+            /* } */
+
                 condition = true;
                 break;
-            }
         }
-        else if(str[i] == ' '){
+       else if(str[i] == ' '){
             i++;
             spaceException++;
             if(spaceException > 1){
@@ -47,9 +56,9 @@ bool is_not_number(char* str)
             break;
         }
     }
-
     return condition;
 }//end is_not_number()
+
 
 int main(int argc, char* argv[])
 {
@@ -106,6 +115,11 @@ int main(int argc, char* argv[])
         //Debugging purposes
         print_tokens(firstToken, secondToken);
     }
+    else if(argc == 2 && argv[1][0] == '-' && strlen(argv[1]) == 2)
+    { //"Makes a GCF table"
+        //Call the debug function from the debugger file.
+        return gcf_table(argc, argv);
+    }
     else if(argc == 3) //With args
     {
         argCmd = true;
@@ -114,13 +128,6 @@ int main(int argc, char* argv[])
 
         //See inside tokens if argv is used 
         print_tokens(firstToken, secondToken);
-        /* printf("\nfirst token:\n%s\n", firstToken); */
-        /* printf("\nsecond token:\n%s\n\n", secondToken); */
-    }
-    else if(argc == 2 && argv[1][0] == '-' && strlen(argv[1]) == 2)
-    { //"Makes a GCF table"
-        //Call the debug function from the debugger file.
-        return gcf_table(argc, argv);
     }
     else
     {
@@ -131,18 +138,13 @@ int main(int argc, char* argv[])
 
     //VALIDATION
     if(is_not_number(firstToken) || is_not_number(secondToken)){
-            puts("Error: Either first token or second token is not a number");
+            puts("Error: Either first token or second token is a negative or not a number");
             return -1;
     }
     else{
-        if(!((firstToken[0] == '0' && strlen(firstToken) == 1) && 
-                    (secondToken[0] == '0' && strlen(secondToken) == 1)))
-        {
             char* ptr;
             twoInts[0] = strtoll(firstToken, &ptr, 10);
             twoInts[1] = strtoll(secondToken, &ptr, 10);
-
-        }
     }
 
     long long GCF = calculate_gcf(twoInts[0], twoInts[1]);
@@ -152,13 +154,3 @@ int main(int argc, char* argv[])
     return 0;
 
 }//end main()
- 
-//Turn this into a function
-/* while(twoInts[1] != 0) */    
-/* { */
-/*     long long r = twoInts[0] % twoInts[1]; */
-/*     twoInts[0] = twoInts[1]; */
-/*     twoInts[1] = r; */
-/* } */
-
-
