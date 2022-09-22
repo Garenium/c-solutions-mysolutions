@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
     //Max no. of digits in MAX_IN is 10, since there are two integers involved and negative numbers are valid, a bump up to 27 is appropriate.
     char input[MAX_BUFFER];   
     char str[MAX_BUFFER];
-    long long twoInts[2]; 
+    uint64_t twoInts[2]; 
     int count = 0;
     char *firstToken;
     char *secondToken;
@@ -147,9 +147,9 @@ int main(int argc, char* argv[])
             twoInts[1] = strtoll(secondToken, &ptr, 10);
     }
 
-    long long GCF = calculate_gcf(twoInts[0], twoInts[1]);
+    uint64_t GCF = calculate_gcf(twoInts[0], twoInts[1]);
 
-    printf("Greatest common divisor: %lld\n", GCF);
+    printf("Greatest common divisor: %"PRIu64"\n", GCF);
 
     return 0;
 

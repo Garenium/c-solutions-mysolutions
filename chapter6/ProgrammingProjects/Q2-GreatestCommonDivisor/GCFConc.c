@@ -2,8 +2,9 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include "GCFHead.h"
 #include <limits.h>
+#include "GCFHead.h"
+
 int gcf_table(int argc, char* argv[]){
    /*
      *
@@ -43,16 +44,23 @@ int gcf_table(int argc, char* argv[]){
             18,446,744,073,709,551,610 max times
 
      * */
+    FILE* file = fopen("./logs/log.txt", "w");
 
-    enum { TEST_SHORT, TEST_INT, TEST_LONG, TEST_LLONG } mode = TEST_SHORT;
+    if(file == NULL)
+    {
+        fprintf(stderr, "file inaccessible");
+        return -1;
+    }
+
+    enum { TEST_USHORT, TEST_UINT, TEST_ULONG, TEST_ULLONG } mode = TEST_USHORT;
 
     int opt = argv[1][1]; 
 
      switch(opt){
          case 'h': break;
-         case 'd': mode = TEST_INT; break; 
-         case 'l': mode = TEST_LONG; break;
-         case 'L': mode = TEST_LLONG; break;
+         case 'd': mode = TEST_UINT; break; 
+         case 'l': mode = TEST_ULONG; break;
+         case 'L': mode = TEST_ULLONG; break;
          default:
          {
           fprintf(stderr, "Available flags (Without any numbers): %s [-h|-d|-l|-L]\n", argv[0]);
@@ -64,24 +72,38 @@ int gcf_table(int argc, char* argv[]){
          }
      }
 
-    if(mode == TEST_SHORT){
-        printf("It's signed integer\n");
+     const char* output;
+
+    if(mode == TEST_USHORT){
+        printf("It's unsigned short\n");
+
         unsigned short i;
         unsigned short j;
 
-        for(i = 0, j = 0; i < USHRT_MAX, j < USHRT_MAX; i++, j++){
-                printf("%hu mod %hu = %lld\n", i,j, calculate_gcf(i, j));
+        /* uint8_t i; */
+        /* uint8_t j; */
+
+        for(i = 0; i < USHRT_MAX; i++){
+            for(j =0 ; j < USHRT_MAX; j++){
+                uint64_t gcf = calculate_gcf(i, j);
+                /* sscanf(output, "%hu GCF %hu = %"PRIu64"\n", i,j, gcf); */
+                /* printf(output); */
+                /* fputs(file, output); */
+
+                /* fprintf(file, "%hu GCF %hu =%"PRIu64"\n", i,j,gcf); */
+                printf("%hu GCF %hu = %"PRIu64"\n", i,j,gcf);
+            }
         }
         
         
     }
-    else if(mode == TEST_INT){
-        printf("It's signed integer\n");
+    else if(mode == TEST_UINT){
+        printf("It's unsigned integer\n");
     }
-    else if(mode == TEST_LONG){
+    else if(mode == TEST_ULONG){
         printf("It's signed long\n");
     }
-    else if(mode == TEST_LLONG){
+    else if(mode == TEST_ULLONG){
         printf("It's signed long long\n");
     }
 
@@ -95,7 +117,7 @@ void print_tokens(char* firstToken, char* secondToken){
 }//end print_tokens()
 
 
-long long calculate_gcf(long long n0, long long n1){
+uint64_t calculate_gcf(uint64_t n0, uint64_t n1){
 
     while(n1 != 0)    
     {
