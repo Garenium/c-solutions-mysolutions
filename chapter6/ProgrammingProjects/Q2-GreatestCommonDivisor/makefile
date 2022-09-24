@@ -1,2 +1,2 @@
 a.out: Main.c GCFConc.c
-	gcc Main.c GCFConc.c -g
+	gcc -g Main.c GCFConc.c

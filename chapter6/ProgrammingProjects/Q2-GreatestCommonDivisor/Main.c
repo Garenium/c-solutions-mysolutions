@@ -1,6 +1,5 @@
 //Calculations tested with https://www.calculatorsoup.com/calculators/math/gcf.php
 #include <stdio.h>
-#include <string.h>
 #include <limits.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -115,10 +114,10 @@ int main(int argc, char* argv[])
         //Debugging purposes
         print_tokens(firstToken, secondToken);
     }
-    else if(argc == 2 && argv[1][0] == '-' && strlen(argv[1]) == 2)
+    else if(argc == 2 && argv[1][0] == '-')
     { //"Makes a GCF table"
         //Call the debug function from the debugger file.
-        return gcf_table(argc, argv);
+        return gcf_table(argv); //make it pass by pointer (&argv)
     }
     else if(argc == 3) //With args
     {
