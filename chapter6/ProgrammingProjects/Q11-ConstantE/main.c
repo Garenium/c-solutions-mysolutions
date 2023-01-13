@@ -4,6 +4,15 @@
 #include <stdlib.h>
 #include <math.h>
 
+double factorial(double i){
+    int fact = 1;
+    for(double j = 1.0; j <= i; ++j){
+        fact *= j;
+    }
+
+    return fact;
+}
+
 int main(int argc, char* argv[])
 {
     
@@ -37,21 +46,16 @@ int main(int argc, char* argv[])
         /* printf("n is %d\n", n); */
 
         //May use another variable fact below
-        double fact = 1;
         for(double i = 1; i <= n; ++i){
-            
-            double j = i;
-
-            if(i != 1){
-                for(double j = i; j > 1.0; --j){
-                    fact = fact * (j - 1.0);
-                }
-            }
-            
+        
+            double fact = factorial(i);
+            //debug
+            //printf("%lf\n", fact);
+          
             approx_e += 1.0/fact;
         }
 
-        printf("e approx.is %lf\n", approx_e);
+        printf("Approx. of e is %lf\n", approx_e);
 
     }
 
