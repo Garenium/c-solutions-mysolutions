@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 {
     
     puts("Finding Euler's e...");
-    puts("Garenium");
+    puts("Author: Garenium 2023");
 
     double approx_e = 1;
     char input[50] = "\0";
