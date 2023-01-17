@@ -4,10 +4,6 @@
 #include <math.h>
 #include <stdlib.h>
 
-/* //I decided to make my own instead of 2 */
-/* double string_to_double() */
-
-
 int main(){
 
     const int32_t MAX_LENGTH = 64;
@@ -27,26 +23,28 @@ int main(){
        return -1;
     }
 
-    char** temp_ptr;
-    x = strtod(input,temp_ptr);
+    char* temp_ptr = input;
+    char** temp_double_ptr = &temp_ptr;
+    x = strtod(input,temp_double_ptr);
      
     printf("x is %lf\n", x);
 
+    double fabs_diff = 0.0;
     do{
         double x_div_y = x/y;
+        double avg = (y + x_div_y)/2;
         
         puts("");
         printf("x: %lf\n", x);
         printf("y: %lf\n", y);
         printf("x/y: %lf\n", x_div_y);
-        printf("Average of y and x/y: %lf\n", (y+x_div_y)/2);
+        printf("Average of y and x/y: %lf\n", avg);
         puts("");
         
         new_y = x_div_y;
+        y = avg;
 
-    }while(fabs(y - new_y) < 0.00001*y);
-    
-
+    }while(fabs(y - new_y) > 0.00001*y);
 
 
     return 0;
