@@ -17,19 +17,27 @@ int main(int argc, char* argv[]){
     int vowels = 0;
     int temp_num_vowels = 0;
 
-    /* //Ask the user what language will the text be? */
-    /* char c[] = "\0"; */
-    /* puts("English : 1 (default)"); */
-    /* puts("Finnish : 2"); */
-    /* printf("What is the language (English by default)? "); */
-    /* fgets(c,1,stdin); */
+    //Ask the user what language will the text be?
+    char c = '\0';
+    printf("English : 1 (default)\n\t%s\n", vowels_by_language.eng);
+    printf("Finnish : 2\n\t%s\n", vowels_by_language.fin);
+    printf("\nWhat is the language (English by default)? ");
+    c = getchar();
 
-    /* if(c == "\n" || c == "1"){ */
-    /*     language_vowels = vowels_by_languages.eng; */ 
-    /* } */
-    /* else if(c == "2"){ */
-    /*     language_vowels = vowels_by_languages.fin; */
-    /* } */
+    if(c == '\n'){
+        language_vowels = vowels_by_language.eng; 
+    }
+    else{
+        switch(c){
+            case '1':
+            language_vowels = vowels_by_language.eng; break;
+            case '2':
+            language_vowels = vowels_by_language.fin; break;
+        }
+        //flush newline from stdin buffer
+        getchar();
+    }
+
 
     if(argc == 1){
         printf("Enter a sentence: ");
@@ -51,7 +59,7 @@ int main(int argc, char* argv[]){
     //using strspn and see how it can it be used in this
     //context instead of the usual switch case
     while(*ptr != '\0'){
-        if(temp_num_vowels = strspn(ptr, vowels_by_language.eng)){
+        if(temp_num_vowels = strspn(ptr, language_vowels)){
             vowels += temp_num_vowels;
             ptr = ptr + temp_num_vowels;
         }

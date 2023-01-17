@@ -6,6 +6,8 @@
 
 int main(){
 
+    puts("Newton's square root method calc.");
+    puts("Author: Garenium 2023");
     const int32_t MAX_LENGTH = 64;
     char input[MAX_LENGTH];
     double x = 0.0;
