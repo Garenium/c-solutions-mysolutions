@@ -6,6 +6,7 @@ typedef struct language_vowels{
     const char* fin;
 } vowels;
 
+
 int main(int argc, char* argv[]){
 
     puts("Counting vowels");
@@ -13,6 +14,7 @@ int main(int argc, char* argv[]){
 
     vowels vowels_by_language = {"aeiouAEIOU", "aeiouyäöAEIOUYÖÄ"};
     const char* language_vowels = NULL;
+    char select_lang[8] = "\0";
     char input[64] = "\0";
     int vowels = 0;
     int temp_num_vowels = 0;
@@ -22,20 +24,25 @@ int main(int argc, char* argv[]){
     printf("English : 1 (default)\n\t%s\n", vowels_by_language.eng);
     printf("Finnish : 2\n\t%s\n", vowels_by_language.fin);
     printf("\nWhat is the language (English by default)? ");
-    c = getchar();
 
-    if(c == '\n'){
-        language_vowels = vowels_by_language.eng; 
+    fgets(select_lang, 4, stdin);
+    select_lang[strlen(select_lang)-1] = '\0';
+    
+    if(strlen(select_lang) > 1) {
+        fprintf(stderr, "Invalid selection\n");
+        return -1;
     }
-    else{
-        switch(c){
-            case '1':
-            language_vowels = vowels_by_language.eng; break;
-            case '2':
-            language_vowels = vowels_by_language.fin; break;
-        }
-        //flush newline from stdin buffer
-        getchar();
+
+    c = select_lang[0];
+
+    switch(c){
+        case '1':
+        language_vowels = vowels_by_language.eng; break;
+        case '2':
+        language_vowels = vowels_by_language.fin; break;
+        default:
+        language_vowels = vowels_by_language.eng; break;
+
     }
 
 
