@@ -2,6 +2,13 @@
 #include <ctype.h>
 int main(int argc, int* argv[]){
 
+    //Using the unscramblerer website as a refernce: 
+    //https://www.unscramblerer.com/scrabble-calculator/
+    
+    puts("Author: Garenium");
+    puts("Feb 4, 2023");
+    puts("Note: the program disregards numeric non-alphabetical characters\n");
+    
     //Scrabble doesn't accept numerical characters. Only alphabetical letters.
     //loop through each letter while adding the value 
     char letter = '\0';

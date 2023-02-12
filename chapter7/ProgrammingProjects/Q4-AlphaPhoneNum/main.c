@@ -2,11 +2,36 @@
 #include <string.h>
 #include <ctype.h>
 
-int main(int argc, int* argv[]){
+int main(int argc, char* argv[]){
     
     const int MAX_LENGTH = 32;
     char input[MAX_LENGTH];
     char* ptr = NULL;
+
+    const char* reference =
+        "\n_____________________ _____________\n"
+        "|  1 (   )  |  2 (abc)  |  3 (def)  |\n"
+        "_____________________________________\n"
+        "|  4 (ghi)  |  5 (jkl)  |  6 (mno)  |\n"
+        "_____________________________________\n"
+        "|  7 (prs)  |  8 (tuv)  |  9 (wxy)  |\n"
+        "_____________________________________\n"
+        "|           |  0 (   )  |           |\n" 
+        "_____________________________________\n";
+
+    puts("Author: Garenium");
+    puts("Feb 4, 2023");
+    puts("Alphabetic phone number converter");
+
+    if(argc >= 2) {
+        if(strcmp(argv[1], "-h") == 0 && strlen(argv[1]) == 2)
+            printf("Reference: %s\n", reference);
+        else
+            puts("USAGE: ./a.out (-h) ");
+
+        return 0;
+    }
+
     printf("Enter phone number: ");
 
     fgets(input, MAX_LENGTH-2, stdin);
