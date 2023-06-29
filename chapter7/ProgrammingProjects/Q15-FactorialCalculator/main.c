@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 int main(int argc, int* argv[]){
 
     char input[64] = "\0";
@@ -18,6 +19,13 @@ int main(int argc, int* argv[]){
     else if(input[0] == '-'){
         puts("Error: negative numbers are not accepted");
         return -1;
+    }
+
+    for(size_t i = 0 ; input[i] != '\0'; ++i){
+        if(isalpha(input[i])){
+        puts("Input is not a number. Exiting the program...");
+        return -1;
+     }
     }
 
     printf("Input is %s\n", input);
