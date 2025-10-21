@@ -5,53 +5,56 @@
 #include <string.h>
 #include <ctype.h>
 
+#define INPUT_SIZE 4 //2 digits + '\n' + '\0'
+            
+
+//Helper function to clear extra chars from stdin
+void clearInputBuffer(void)
+{
+    int ch;
+    while((ch = getchar()) != '\n' && ch != EOF) {}
+}
 
 int main(void)
 {
-    bool isInt = false;
-    char n[4];
-    size_t i = 0;
+    char input[INPUT_SIZE];
+    int n = -1;
+    bool isValid = false;
     int c;
-    while (!isInt)
+
+    while (!isValid)
     {
-        bool tooLong = false;
         printf("Enter a two digit number: ");
-        fgets(n, 4, stdin);
+        
+        if(fgets(input, sizeof(input), stdin) == NULL){
+            puts("Error reading input");
+            return 1;
+        }
 
-
-        if(n[strlen(n)-1] == '\n')
+        //Remove trailing newline. Otherwise, flush leftover input
+        size_t len = strlen(input);
+        if(len > 0 && input[len -1] == '\n')
         {
-            //printf("%zu", strlen(n)); Debugging purposes
-            n[strlen(n) - 1] = '\0';
-            ungetc('\n', stdin);
+            input[len - 1] = '\0';
         }       
+        else{
+            clearInputBuffer();
+        }
 
         //Condition 1: Validate the length of the c-string 
-        if (strlen(n) == 2)
-        {
-            //Condition 2: Validate the content of the c-string
-            if (isdigit(n[0]) && isdigit(n[1]))
-            {
-                isInt = true;
-            }
-            else 
-            {
-                puts("Error: Invalid input");
-                while ((c = getchar()) != EOF &&   c!= '\n') {};
-            }
+        //Condition 2: Validate the content of the c-string
+        if (strlen(input) == 2 && isdigit((unsigned char)input[0]) && isdigit((unsigned)input[0])) {        
+            isValid = true;
         }
         else 
         {
-            //printf("%zu", strlen(n)); Debugging purposes
             puts("Error: please type only two digits");
-            while ((c = getchar()) != EOF &&   c!= '\n') {};
         }
     }
-    //If validated, print backwards
-    for (int i = strlen(n)-1; i >= 0; --i)
-    {
-        printf("%c", n[i]);
-    }
+
+    //Based on the "hint" part in the book.
+    n = ((input[1]-'0')*10) + (input[0]-'0');
+    printf("%d%d",n/10, n%10);
     puts("");
     return 0;
 }
