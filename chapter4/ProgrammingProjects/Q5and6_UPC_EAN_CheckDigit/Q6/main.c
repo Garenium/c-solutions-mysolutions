@@ -4,11 +4,25 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <ctype.h>
+
+#define MAX_SIZE 16
+#define MAX_INPUT 12
+
+void printIntro(){
+    const char* intro = 
+        "Check digit calculator for EAN-13 (GTIN-13)\n"
+        "Author: Garen Ikezian\n"
+        "Date: Jun. 5, 2021\n"
+        "For confirmation: see https://www.gs1.org/services/check-digit-calculator\n";
+
+    printf("%s\n", intro);
+}
+
 int main(int argc, int* argv[])
 {
     typedef uint16_t uint;
 
-    char upc[15];
+    char upc[MAX_SIZE];
     int c;
     //bool valid = true;
 
@@ -16,25 +30,23 @@ int main(int argc, int* argv[])
     uint secondSum = 0;
     uint checkDigit = 0;
 
-    puts("Check digit calculator for GTIN-12");
-    puts("Author: Garenium");
-    puts("Date: Jun 5, 2021");
+    printIntro();
 
-    printf("Enter the first 11 digits of a UPC (GTIN-12): ");
-    fgets(upc, 14, stdin);
+    printf("Enter the first 12 digits of an EAN: ");
+    fgets(upc, MAX_SIZE-1, stdin);
     //while((c = getchar()) != '\n' && c != EOF); //flushing the buffer
     upc[strlen(upc)-1] = '\0';
     
-    printf("upc = %s\n", upc); //Debugging purposes
+    //Debugging purposes
+    //printf("upc = %s\n", upc); 
 
-    if(strlen(upc) < 11 || strlen(upc) > 11)
+    if(strlen(upc) < MAX_INPUT || strlen(upc) > MAX_INPUT)
     {
-        puts("Error: less or more than specified digits (11) [line 32]");
+        puts("Error: less or more than specified digits (12)");
         return -1;
     }
 
-    size_t i;
-    for(i = 0; i < strlen(upc); ++i)
+    for(size_t i = 0; i < strlen(upc); ++i)
     {
         if(!(isdigit(upc[i]))){
             puts("Error: invalid input [line: 40]");
@@ -48,11 +60,10 @@ int main(int argc, int* argv[])
     }
 
     //Debugging purposes 
-    /*printf("firstSum = %u\n", firstSum);
-    printf("secondSum = %u\n", secondSum);*/
+    printf("firstSum = %u\n", firstSum);
+    printf("secondSum = %u\n", secondSum);
 
-    
-    checkDigit = ((secondSum*3+firstSum)-1);
+    checkDigit = ((firstSum*3)+secondSum)-1;
     checkDigit = checkDigit % 10;
     checkDigit = 9 - checkDigit;
     printf("Check digit: %u\n", checkDigit);

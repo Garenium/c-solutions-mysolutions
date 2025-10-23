@@ -1,6 +1,8 @@
 #! /bin/bash
 
-for i in {1..10}
-do ./lightDecToOctConverter "$RANDOM"
-#do ./lightDecToOctConverter "$i"
+for i in {1..10}; do
+    x="$RANDOM"
+    echo "Input: $x"
+    ./lightDecToOctConverter "$x"
+    #do ./lightDecToOctConverter "$i"
 done
