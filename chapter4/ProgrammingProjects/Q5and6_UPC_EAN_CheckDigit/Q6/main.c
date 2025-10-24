@@ -26,8 +26,8 @@ int main(int argc, int* argv[])
     int c;
     //bool valid = true;
 
-    uint firstSum = 0;
-    uint secondSum = 0;
+    uint oddSum = 0;
+    uint evenSum = 0;
     uint checkDigit = 0;
 
     printIntro();
@@ -54,16 +54,16 @@ int main(int argc, int* argv[])
         }
 
         if(i % 2 != 0) //add up all odd index elements
-          firstSum += (upc[i])-'0';
+          oddSum += (upc[i])-'0';
         else if(i % 2 == 0) //add up all even index elements
-          secondSum += (upc[i])-'0';
+          evenSum += (upc[i])-'0';
     }
 
     //Debugging purposes 
-    printf("firstSum = %u\n", firstSum);
-    printf("secondSum = %u\n", secondSum);
+    printf("firstSum = %u\n", oddSum);
+    printf("secondSum = %u\n", evenSum);
 
-    checkDigit = ((firstSum*3)+secondSum)-1;
+    checkDigit = ((oddSum*3)+evenSum)-1;
     checkDigit = checkDigit % 10;
     checkDigit = 9 - checkDigit;
     printf("Check digit: %u\n", checkDigit);
