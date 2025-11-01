@@ -29,25 +29,28 @@ int main(){
     char** temp_double_ptr = &temp_ptr;
     x = strtod(input,temp_double_ptr);
      
-    printf("x is %lf\n", x);
+    /* printf("x is %lf\n", x); */
 
     double fabs_diff = 0.0;
     do{
         double x_div_y = x/y;
         double avg = (y + x_div_y)/2;
         
-        puts("");
-        printf("x: %lf\n", x);
-        printf("y: %lf\n", y);
-        printf("x/y: %lf\n", x_div_y);
-        printf("Average of y and x/y: %lf\n", avg);
-        puts("");
+        /* puts("DEBUG"); */
+        /* printf("x: %lf\n", x); */
+        /* printf("y: %lf\n", y); */
+        /* printf("x/y: %lf\n", x_div_y); */
+        /* printf("Average of y and x/y: %lf\n", avg); */
+        /* puts(""); */
         
+        //3
         new_y = x_div_y;
+        //2
         y = avg;
 
     }while(fabs(y - new_y) > 0.00001*y);
 
+    printf("Square root: %lf\n", y);
 
     return 0;
 }
